@@ -1,0 +1,47 @@
+# wtch
+
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
+
+A small command-line app that watches for file changes and triggers a live-reload. Ideal for use with wzrd and similar tools. Watches the current working directory for `js, html, css` extensions, ignoring `.git` folder, node modules and bower components. 
+
+```js
+wzrd index.js | wtch
+```
+
+Or with options:
+
+```js
+wzrd test/index.js | wtch --dir test -e js,css,es6
+```
+
+PRs/suggestions welcome.
+
+## Usage
+
+[![NPM](https://nodei.co/npm/wtch.png)](https://www.npmjs.com/package/wtch)
+
+```sh
+Usage:
+    wtch [opts]
+
+Options:
+    --dir -d        current working directory to watch (defaults to cwd)
+    --extension -e  specifies an extension or a comma-separated list (default js,css,html)
+    --port -p       the port to run livereload (defaults to 35729)
+```
+
+## API
+
+#### `wtch(glob, [opt, cb])`
+
+Returns a through stream that watches the glob (or array of globs) with the given options and an optional callback.
+
+Options:
+
+- `cwd` the current working directory for gaze
+- `event` the type of event for gaze, such as `"all"` or `"changed"` (defaults to changed)
+- `port` the port for livereload, defaults to 35729
+
+## License
+
+MIT, see [LICENSE.md](http://github.com/mattdesl/wtch/blob/master/LICENSE.md) for details.
