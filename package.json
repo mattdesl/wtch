@@ -1,7 +1,7 @@
 {
   "name": "wtch",
   "version": "1.0.2",
-  "description": "small gaze / livereload watch utility",
+  "description": "small livereload/watch command line utility",
   "main": "index.js",
   "license": "MIT",
   "bin": {

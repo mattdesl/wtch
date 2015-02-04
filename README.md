@@ -2,7 +2,7 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-A small command-line app that watches for file changes and triggers a live-reload on file save. Watches the current working directory for `js, html, css` extensions, ignoring `.git` folder, node modules and bower components. 
+A small command-line app that watches for file changes and triggers a live-reload on file save. Watches the current working directory for `js,html,css` file changes. ignores `.git` folder, `node_modules` and `bower_components`. 
 
 ```sh
 npm install wtch -g
