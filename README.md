@@ -2,7 +2,16 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-A small command-line app that watches for file changes and triggers a live-reload. Ideal for use with wzrd and similar tools. Watches the current working directory for `js, html, css` extensions, ignoring `.git` folder, node modules and bower components. 
+A small command-line app that watches for file changes and triggers a live-reload on file save. Watches the current working directory for `js, html, css` extensions, ignoring `.git` folder, node modules and bower components. 
+
+```js
+npm install wtch -g
+
+#start watching ..
+wtch
+```
+
+Useful alongside tools like [wzrd](https://github.com/maxogden/wzrd).
 
 ```js
 wzrd index.js | wtch
