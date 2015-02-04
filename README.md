@@ -4,7 +4,7 @@
 
 A small command-line app that watches for file changes and triggers a live-reload on file save. Watches the current working directory for `js, html, css` extensions, ignoring `.git` folder, node modules and bower components. 
 
-```js
+```sh
 npm install wtch -g
 
 #start watching ..
