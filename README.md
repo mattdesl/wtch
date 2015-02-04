@@ -11,16 +11,16 @@ npm install wtch -g
 wtch
 ```
 
-Useful alongside tools like [wzrd](https://github.com/maxogden/wzrd).
+Particularly useful alongside tools like [wzrd](https://github.com/maxogden/wzrd).
 
 ```js
 wzrd index.js | wtch
 ```
 
-Or with options:
+With options, and using [garnish](https://github.com/mattdesl/garnish) for pretty-printing.
 
 ```js
-wzrd test/index.js | wtch --dir test -e js,css,es6
+wzrd test/index.js | wtch --dir test -e js,css,es6 | garnish
 ```
 
 PRs/suggestions welcome.
