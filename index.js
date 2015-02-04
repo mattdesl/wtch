@@ -12,6 +12,7 @@ module.exports = function wtch(glob, opt, cb) {
         cb = cb || noop
     }
 
+    
     opt = xtend({
         port: 35729,
         event: 'changed'
@@ -20,7 +21,12 @@ module.exports = function wtch(glob, opt, cb) {
     var server = tinylr()
 
     server.listen(opt.port, 'localhost', function(a) {
-        out.push(JSON.stringify('livereload running on port '+opt.port)+'\n')
+        console.log(JSON.stringify({
+            time:new Date(), 
+            level: 'info', 
+            message: 'livereload running on '+opt.port
+        }))
+
         gaze(glob, opt, function(err, watcher) {
             this.on(opt.event, function(filepath) {
                 try {
