@@ -1,6 +1,6 @@
 {
   "name": "wtch",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "small livereload/watch command line utility",
   "main": "index.js",
   "license": "MIT",
