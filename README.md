@@ -36,7 +36,10 @@ Usage:
 Options:
     --dir -d        current working directory to watch (defaults to cwd)
     --extension -e  specifies an extension or a comma-separated list (default js,css,html)
+    --event         the type of event to watch, "all" or "change" (default "change")
     --port -p       the port to run livereload (defaults to 35729)
+    --verbose       log the file changes as well
+    --poll          enable polling for file watching
 ```
 
 ## API
@@ -45,11 +48,13 @@ Options:
 
 Returns a through stream that watches the glob (or array of globs) with the given options and an optional callback.
 
-Options:
+Supported options:
 
-- `cwd` the current working directory for gaze
-- `event` the type of event for gaze, such as `"all"` or `"changed"` (defaults to changed)
+- `cwd` the current working directory for chokidar
+- `poll` whether to use polling, default false
+- `event` the type of event to watch, can be `"change"` (default, only file save) or `"all"` (remove/delete/etc)
 - `port` the port for livereload, defaults to 35729
+- `verbose` to log file changes
 
 ## License
 

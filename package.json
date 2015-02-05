@@ -13,7 +13,7 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
-    "gaze": "^0.6.4",
+    "chokidar": "^1.0.0-rc3",
     "minimist": "^1.1.0",
     "through2": "^0.6.3",
     "tiny-lr": "^0.1.5",
@@ -33,7 +33,6 @@
     "watcher",
     "dev",
     "server",
-    "gaze",
     "livereload",
     "live",
     "reload"
