@@ -11,17 +11,13 @@ npm install wtch -g
 wtch
 ```
 
-Particularly useful alongside tools like [wzrd](https://github.com/maxogden/wzrd).
+You can use [garnish](https://github.com/mattdesl/garnish) for pretty-printing logs. 
 
 ```js
-wzrd index.js | wtch
+wtch --verbose | garnish
 ```
 
-With options, and using [garnish](https://github.com/mattdesl/garnish) for pretty-printing.
-
-```js
-wzrd test/index.js | wtch --dir test -e js,css,es6 | garnish
-```
+See [examples](#examples) for use with browserify and other tools. 
 
 PRs/suggestions welcome.
 
@@ -55,6 +51,20 @@ Supported options:
 - `event` the type of event to watch, can be `"change"` (default, only file save) or `"all"` (remove/delete/etc)
 - `port` the port for livereload, defaults to 35729
 - `verbose` to log file changes
+
+## Examples
+
+This can be used for live-reloading alongside [wzrd](https://github.com/maxogden/wzrd), [beefy](https://github.com/maxogden/beefy) and similar bundlers. For example:   
+
+```sh
+wzrd test/index.js | wtch --dir test -e js,css,es6 | garnish
+```
+
+Or, even for a simple site with no JS content. The following example uses [http-server](https://www.npmjs.com/package/http-server) and listens for HTML/CSS changes in the current directory. 
+
+```sh
+http-server -o -p 8000 | wtch --verbose | garnish
+```
 
 ## License
 
