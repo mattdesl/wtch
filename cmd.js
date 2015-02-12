@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var argv = require('minimist')(process.argv.slice(2))
 var wtch = require('./')
+var bole = require('bole')
 
 if (argv.p)
     argv.port = argv.p    
@@ -34,6 +35,11 @@ var files = extension.length === 0
 var glob = files.concat(watch)
 argv.cwd = argv.dir || argv.d
 
-process.stdin
-    .pipe(wtch(glob, argv))
-    .pipe(process.stdout)
+//setup ndjson output
+bole.output({
+    level: 'debug', 
+    stream: process.stdout
+})
+
+wtch(glob, argv)
+process.stdin.pipe(process.stdout)

@@ -2,6 +2,7 @@ var through2 = require('through2')
 var xtend = require('xtend')
 var tinylr = require('tiny-lr')
 var watch = require('chokidar').watch
+var log = require('bole')('wtch')
 
 var noop = function(){} 
 
@@ -27,11 +28,7 @@ module.exports = function wtch(glob, opt, cb) {
         opt.usePolling = true
 
     server.listen(opt.port, 'localhost', function(a) {
-        console.log(JSON.stringify({
-            time:new Date(), 
-            level: 'info', 
-            message: 'livereload running on '+opt.port
-        }))
+        log.info('livereload running on '+opt.port)
         var watcher = watch(glob, opt)
 
         watcher.on(opt.event, opt.event === 'all' 
@@ -43,14 +40,7 @@ module.exports = function wtch(glob, opt, cb) {
     })
 
     function reload(event, path) {
-        if (opt.verbose) {
-            console.log(JSON.stringify({
-                time:new Date(), 
-                level: 'info', 
-                type: event,
-                url: path
-            }))
-        }
+        log.debug({ type: event, url: path })
         try {
             server.changed({ body: { files: [ path ] } })
         } catch (e) {
