@@ -73,7 +73,7 @@ watchify index.js -o bundle.js | wtch bundle.js
 Or, even for a simple site with no JS content. The following example uses [http-server](https://www.npmjs.com/package/http-server) and listens for HTML/CSS changes in the current directory. 
 
 ```sh
-http-server -o -p 8000 | wtch | garnish -l debug
+http-server | wtch | garnish
 ```
 
 See this package.json's script field for examples. 
