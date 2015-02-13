@@ -27,7 +27,7 @@ PRs/suggestions welcome.
 
 ```sh
 Usage:
-    wtch [opts]
+    wtch [globs] [opts]
 
 Options:
     --dir -d        current working directory to watch (defaults to cwd)
@@ -35,6 +35,12 @@ Options:
     --event         the type of event to watch, "all" or "change" (default "change")
     --port -p       the port to run livereload (defaults to 35729)
     --poll          enable polling for file watching
+```
+
+By default, it looks for `**/*` with the specified extensions. If `globs` is specified, they will *override* this behaviour. So you can do this to only watch a single file:
+
+```
+wtch bundle.js
 ```
 
 ## API
@@ -52,10 +58,16 @@ Supported options:
 
 ## Examples
 
-This can be used for live-reloading alongside [wzrd](https://github.com/maxogden/wzrd), [beefy](https://github.com/maxogden/beefy) and similar bundlers. For example:   
+This can be used for live-reloading alongside [wzrd](https://github.com/maxogden/wzrd), [beefy](https://github.com/maxogden/beefy) and similar development servers. For example:   
 
 ```sh
 wzrd test/index.js | wtch --dir test -e js,css,es6 | garnish
+```
+
+It can also be used to augment [watchify](https://github.com/maxogden/watchify) with a browser live-reload event. 
+
+```sh
+watchify index.js -o bundle.js | wtch bundle.js
 ```
 
 Or, even for a simple site with no JS content. The following example uses [http-server](https://www.npmjs.com/package/http-server) and listens for HTML/CSS changes in the current directory. 
@@ -63,6 +75,8 @@ Or, even for a simple site with no JS content. The following example uses [http-
 ```sh
 http-server -o -p 8000 | wtch | garnish -l debug
 ```
+
+See this package.json's script field for examples. 
 
 ## License
 

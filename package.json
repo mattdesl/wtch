@@ -24,10 +24,14 @@
     "browserify": "^8.1.3",
     "garnish": "^2.0.0",
     "tape": "^3.5.0",
+    "watchify": "^2.3.0",
     "wzrd": "^1.2.1"
   },
   "scripts": {
-    "demo": "wzrd test/demo.js | wtch | garnish --level debug"
+    "demo": "wzrd test/demo.js | ./cmd.js | garnish --level debug",
+    "watcher": "watchify test/demo.js -o test/bundle.js --verbose",
+    "live": "./cmd.js test/bundle.js | garnish",
+    "incremental": "npm run watcher | npm run live"
   },
   "keywords": [
     "watch",

@@ -8,3 +8,5 @@ test.js
 demo/
 .npmignore
 LICENSE.md
+test/bundle.js
+test/test.html
