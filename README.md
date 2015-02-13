@@ -76,7 +76,7 @@ Or, even for a simple site with no JS content. The following example uses [http-
 http-server | wtch | garnish
 ```
 
-See this package.json's script field for examples. 
+See [this package.json's](https://github.com/mattdesl/wtch/blob/master/package.json) script field for more detailed examples. 
 
 ## License
 
