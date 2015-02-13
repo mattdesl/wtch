@@ -74,7 +74,7 @@ Then, you can run your development server like so:
 http-server | wtch | garnish
 ```
 
-Enable LiveReload by clicking the plugin so the center of it turns black. You may need to refresh the page first.
+Open `localhost:8080` and enable LiveReload by clicking the plugin. The center circle will turn black. You may need to refresh the page first.
 
 ![Click to enable](http://i.imgur.com/YdCgusY.png)
 
