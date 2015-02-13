@@ -47,7 +47,7 @@ wtch bundle.js
 
 #### `wtch(glob, [opt, cb])`
 
-Returns a through stream that watches the glob (or array of globs) with the given options and an optional callback.
+Returns a through stream that watches the glob (or array of globs) with the given options and an optional callback when LiveReload is listening.
 
 Supported options:
 
