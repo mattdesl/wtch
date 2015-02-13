@@ -76,7 +76,7 @@ http-server | wtch | garnish
 
 Enable LiveReload by clicking the plugin so the center of it turns black. You may need to refresh the page first.
 
-![Click to enable](http://imgur.com/YdCgusY)
+![Click to enable](http://i.imgur.com/YdCgusY.png)
 
 Now when you save a JS/HTML/CSS file in the current directory, it will trigger a live-reload event on your `localhost:8080` tab. CSS files will be injected without a page refresh.
 
