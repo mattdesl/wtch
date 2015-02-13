@@ -2,7 +2,7 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-A small command-line app that watches for file changes and triggers a live-reload on file save (to be used with the LiveReload plugin). Watches the current working directory for `js,html,css` file changes. Ignores `.git`, `node_modules` and `bower_components` folders. 
+A small command-line app that watches for file changes and triggers a live-reload on file save (to be used with the [LiveReload plugin](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)). Watches the current working directory for `js,html,css` file changes. Ignores `.git`, `node_modules` and `bower_components` folders. 
 
 ```sh
 npm install wtch -g
@@ -17,7 +17,7 @@ You can use [garnish](https://github.com/mattdesl/garnish) for pretty-printing l
 wtch | garnish --level debug
 ```
 
-See [examples](#examples) for using with browserify, watchify, and other tools.
+See [setup](#setup) for a basic how-to, and [tooling](#Tooling) for more advanced uses with browserify, watchify, etc.
 
 PRs/suggestions welcome.
 
@@ -56,7 +56,31 @@ Supported options:
 - `event` the type of event to watch, can be `"change"` (default, only file save) or `"all"` (remove/delete/etc)
 - `port` the port for livereload, defaults to 35729
 
-## Examples
+## Setup
+
+First, install the LiveReload plugin for your browser of choice (e.g. [Chrome](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)). 
+
+Now, install some tools globally. 
+
+```sh
+npm install wtch http-server garnish -g
+```
+
+Create a basic `index.html` file that references scripts and/or CSS files.
+
+Then, you can run your development server like so:
+
+```sh
+http-server | wtch | garnish
+```
+
+Enable LiveReload by clicking the plugin so the center of it turns black. You may need to refresh the page first.
+
+![Click to enable](http://imgur.com/YdCgusY)
+
+Now when you save a JS/HTML/CSS file in the current directory, it will trigger a live-reload event on your `localhost:8080` tab. CSS files will be injected without a page refresh.
+
+## Tooling
 
 This can be used for live-reloading alongside [wzrd](https://github.com/maxogden/wzrd), [beefy](https://github.com/maxogden/beefy) and similar development servers. For example:   
 
@@ -68,12 +92,6 @@ It can also be used to augment [watchify](https://github.com/maxogden/watchify) 
 
 ```sh
 watchify index.js -o bundle.js | wtch bundle.js
-```
-
-Or, even for a simple site with no JS content. The following example uses [http-server](https://www.npmjs.com/package/http-server) and listens for HTML/CSS changes in the current directory. 
-
-```sh
-http-server | wtch | garnish
 ```
 
 See [this package.json's](https://github.com/mattdesl/wtch/blob/master/package.json) script field for more detailed examples. 
