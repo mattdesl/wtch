@@ -17,7 +17,7 @@ You can use [garnish](https://github.com/mattdesl/garnish) for pretty-printing l
 wtch | garnish --level debug
 ```
 
-See [examples](#examples) for use with browserify and other tools. 
+See [examples](#examples) for using with browserify, watchify, and other tools.
 
 PRs/suggestions welcome.
 
@@ -64,7 +64,7 @@ This can be used for live-reloading alongside [wzrd](https://github.com/maxogden
 wzrd test/index.js | wtch --dir test -e js,css,es6 | garnish
 ```
 
-It can also be used to augment [watchify](https://github.com/maxogden/watchify) with a browser live-reload event. 
+It can also be used to augment [watchify](https://github.com/maxogden/watchify) with a browser live-reload event. This is better suited for larger bundles.
 
 ```sh
 watchify index.js -o bundle.js | wtch bundle.js
