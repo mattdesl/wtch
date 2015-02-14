@@ -15,7 +15,9 @@
   "dependencies": {
     "bole": "^2.0.0",
     "chokidar": "^1.0.0-rc3",
+    "events": "^1.0.2",
     "minimist": "^1.1.0",
+    "tape": "^3.5.0",
     "through2": "^0.6.3",
     "tiny-lr": "^0.1.5",
     "xtend": "^4.0.0"
@@ -31,7 +33,8 @@
     "demo": "wzrd test/demo.js | ./cmd.js | garnish --level debug",
     "watcher": "watchify test/demo.js -o test/bundle.js --verbose",
     "live": "./cmd.js test/bundle.js | garnish",
-    "incremental": "npm run watcher | npm run live"
+    "incremental": "npm run watcher | npm run live",
+    "test": "node test/test.js"
   },
   "keywords": [
     "watch",

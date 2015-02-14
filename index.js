@@ -1,19 +1,10 @@
-var through2 = require('through2')
 var xtend = require('xtend')
 var tinylr = require('tiny-lr')
 var watch = require('chokidar').watch
 var log = require('bole')('wtch')
+var Emitter = require('events/')
 
-var noop = function(){} 
-
-module.exports = function wtch(glob, opt, cb) {
-    if (typeof opt === 'function') {
-        cb = opt
-        opt = {}
-    } else {
-        cb = cb || noop
-    }
-
+module.exports = function wtch(glob, opt) {
     opt = xtend({
         port: 35729,
         event: 'change'
@@ -21,42 +12,53 @@ module.exports = function wtch(glob, opt, cb) {
     if (opt.event === 'changed') //backwards compatible with v1
         opt.event = 'change'
 
-    var out = through2()
+    var emitter = new Emitter()
     var server = tinylr()
+    var closed = false
+    var watcher
 
     if (opt.poll)
         opt.usePolling = true
 
     server.listen(opt.port, 'localhost', function(a) {
-        log.info('livereload running on '+opt.port)
-        var watcher = watch(glob, opt)
+        if (closed)
+            return
 
+        log.info('livereload running on '+opt.port)
+        watcher = watch(glob, opt)
         watcher.on(opt.event, opt.event === 'all' 
                 ? reload 
                 : reload.bind(null, 'change'))
 
-        cb()
-        cb = noop
+        emitter.emit('connect', server)
     })
 
     function reload(event, path) {
+        emitter.emit('file', event, path)
         log.debug({ type: event, url: path })
         try {
             server.changed({ body: { files: [ path ] } })
+            emitter.emit('reload', path)
         } catch (e) {
             throw e
         }
     }
 
-    var emitter = server.server
-    emitter.removeAllListeners('error')
-    emitter.on('error', function(err) {
+    var serverImpl = server.server
+    serverImpl.removeAllListeners('error')
+    serverImpl.on('error', function(err) {
         if (err.code === 'EADDRINUSE') {
             process.stderr.write('ERROR: livereload not started, port '+opt.port+' is in use\n')
             server.close()
         }
-        cb(err)
-        cb = noop
     })
-    return out
+
+    emitter.close = function() {
+        server.close()
+        if (watcher)
+            watcher.close()
+        closed = true
+    }
+
+    return emitter
 }
