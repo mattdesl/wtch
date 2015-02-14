@@ -45,9 +45,9 @@ wtch bundle.js
 
 ## API
 
-#### `wtch(glob, [opt, cb])`
+#### `live = wtch(glob, [opt])`
 
-Returns a through stream that watches the glob (or array of globs) with the given options and an optional callback when LiveReload is listening.
+Returns a through stream that watches the glob (or array of globs) and returns an event emitter.
 
 Supported options:
 
@@ -55,6 +55,19 @@ Supported options:
 - `poll` whether to use polling, default false
 - `event` the type of event to watch, can be `"change"` (default, only file save) or `"all"` (remove/delete/etc)
 - `port` the port for livereload, defaults to 35729
+- `ignoreReload` a glob or array of globs to ignore live reload events (`watch` event is still triggered)
+
+#### `live.on('connect')`
+
+An event dispatched when the connection to live-reload server occurs.
+
+#### `live.on('watch')`
+
+An event dispatched when file change occurs. The first parameter is `event` type (e.g. `"change"`), the second is `file` path.
+
+#### `live.on('reload')`
+
+An event dispatched after the live reload trigger. First parameter will be the file path. 
 
 ## Setup
 

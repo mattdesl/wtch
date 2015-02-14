@@ -6,7 +6,7 @@ var path = require('path')
 test('should connect to live reload server', function(t) {
     var filepath = path.join(__dirname, 'tmp.txt')
     var live = wtch(filepath)
-    t.plan(3)
+    t.plan(4)
     live.on('connect', function() {
         t.ok(true, 'connected to server')
         setTimeout(function() {
@@ -14,9 +14,13 @@ test('should connect to live reload server', function(t) {
         }, 10)
     })
 
-    live.on('file', function(event, file) {
+    live.on('watch', function(event, file) {
         t.equal(event, 'change', 'received change event')
         t.equal(file, filepath, 'received change file')
+    })
+
+    live.on('reload', function(file) {
+        t.equal(file, filepath, 'received livereload trigger')
         live.close()
     })
 })
