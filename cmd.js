@@ -6,15 +6,12 @@ var bole = require('bole')
 if (argv.p)
     argv.port = argv.p    
 
-var ignores = ['!.git/**', '!node_modules/**', '!bower_components/**']
 var extension = argv.e || argv.extension || ['js', 'html', 'css']
 
 //if user passed globs, use those
-var files = argv._.filter(Boolean)
-if (files.length === 0) //otherwise wildcard w/ extensions
-    files = [ toExtension(extension) ]
-
-var globs = ignores.concat(files)
+var globs = argv._.filter(Boolean)
+if (globs.length === 0) //otherwise wildcard w/ extensions
+    globs = [ toExtension(extension) ]
 
 argv.cwd = argv.dir || argv.d
 

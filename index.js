@@ -5,13 +5,19 @@ var log = require('bole')('wtch')
 var Emitter = require('events/')
 var match = require('minimatch')
 
+var ignore = [
+    'node_modules/**', 'bower_components/**',
+    '.git', '.hg', '.svn', '.DS_Store', 
+    '*.swp', 'thumbs.db', 'desktop.ini'
+]
+
 module.exports = function wtch(glob, opt) {
     opt = xtend({
         port: 35729,
-        event: 'change'
+        event: 'change',
+        ignored: ignore,
+        ignoreInitial: true
     }, opt)
-    if (opt.event === 'changed') //backwards compatible with v1
-        opt.event = 'change'
 
     var ignoreReload = opt.ignoreReload
     var emitter = new Emitter()

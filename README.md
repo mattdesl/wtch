@@ -2,7 +2,7 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-A small command-line app that watches for file changes and triggers a live-reload on file save (to be used with the [LiveReload plugin](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)). Watches the current working directory for `js,html,css` file changes. Ignores `.git`, `node_modules` and `bower_components` folders. 
+A small command-line app that watches for file changes and triggers a live-reload on file save (to be used with the [LiveReload plugin](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)). Watches the current working directory for `js,html,css` file changes. Ignores `.git`, `node_modules`, and `bower_components`, and other hidden files. 
 
 ```sh
 npm install wtch -g
