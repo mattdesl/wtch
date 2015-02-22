@@ -2,7 +2,7 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-A small command-line app that watches for file changes and triggers a live-reload on file save (to be used with the [LiveReload plugin](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)). Watches the current working directory for `js,html,css` file changes. Ignores `.git`, `node_modules`, and `bower_components`, and other hidden files. 
+A small command-line app that watches for file changes and triggers a live-reload on file save (using [LiveReload](http://livereload.com/)). Watches the current working directory for `js,html,css` file changes. Ignores `.git`, `node_modules`, and `bower_components`, and other hidden files. 
 
 ```sh
 npm install wtch -g
@@ -75,7 +75,7 @@ There are two common ways of enabling LiveReload.
 
 #### Script Tag
 
-You can insert the following script tag in your HTML file which will work across browsers and devices:
+You can insert the following script tag in your HTML file. This will work across browsers and devices.
 
 ```html
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
