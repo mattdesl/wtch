@@ -17,7 +17,7 @@ You can use [garnish](https://github.com/mattdesl/garnish) for pretty-printing l
 wtch | garnish --level debug
 ```
 
-See [setup](#setup) for a basic how-to, and [tooling](#Tooling) for more advanced uses with browserify, watchify, etc.
+See [setup](#livereload-setup) for a basic how-to, and [tooling](#Tooling) for more advanced uses with browserify, watchify, etc.
 
 PRs/suggestions welcome.
 
@@ -69,7 +69,21 @@ An event dispatched when file change occurs. The first parameter is `event` type
 
 An event dispatched after the live reload trigger. First parameter will be the file path. 
 
-## Setup
+## LiveReload Setup
+
+There are two common ways of enabling LiveReload.
+
+#### Script Tag
+
+You can insert the following script tag in your HTML file which will work across browsers and devices:
+
+```html
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+```
+
+Or you could use [inject-lr-script](https://github.com/mattdesl/inject-lr-script) to inject it while serving HTML content.
+
+#### Browser Plugin
 
 First, install the LiveReload plugin for your browser of choice (e.g. [Chrome](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)). 
 
