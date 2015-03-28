@@ -45,8 +45,12 @@ module.exports = function wtch(glob, opt) {
         emitter.emit('watch', event, path)
         log.debug({ type: event, url: path })
 
-        if (reject(path, ignoreReload))
+        if ((Array.isArray(ignoreReload) || typeof ignoreReload === 'string')
+                && reject(path, ignoreReload)) {
             return
+        } else if (typeof ignoreReload === 'function' && ignoreReload(path)) {
+            return
+        }
 
         try {
             server.changed({ body: { files: [ path ] } })

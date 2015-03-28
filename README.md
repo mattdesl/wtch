@@ -55,7 +55,20 @@ Supported options:
 - `poll` whether to use polling, default false
 - `event` the type of event to watch, can be `"change"` (default, only file save) or `"all"` (remove/delete/etc)
 - `port` the port for livereload, defaults to 35729
-- `ignoreReload` a glob or array of globs to ignore live reload events (`watch` event is still triggered)
+- `ignoreReload` allows ignoring LiveReload events for specific files; can be a file path, or an array of paths, or a function that returns `true` to ignore the reload, Example:
+
+```js
+wtch('**/*.js', { 
+  ignoreReload: function(file) {
+    //don't trigger LiveReload for this file
+    if (file === fileToIgnore)
+      return true
+    return false
+  } 
+})
+  //instead, manually decide what to do when that file changes
+  .on('watch', handler)
+```
 
 #### `live.on('connect')`
 
