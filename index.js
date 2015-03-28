@@ -13,12 +13,14 @@ var ignore = [
 
 module.exports = function wtch(glob, opt) {
     opt = xtend({
-        port: 35729,
         event: 'change',
         ignored: ignore,
         ignoreInitial: true
     }, opt)
 
+    if (typeof opt.port !== 'number')
+        opt.port = 35729
+    
     var ignoreReload = opt.ignoreReload
     var emitter = new Emitter()
     var server = tinylr()
