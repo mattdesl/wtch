@@ -20,17 +20,24 @@ module.exports = function wtch(glob, opt) {
 
     if (typeof opt.port !== 'number')
         opt.port = 35729
-    
+
+    var livereload = opt.livereload !== false
     var ignoreReload = opt.ignoreReload
     var emitter = new Emitter()
-    var server = tinylr()
+    var server = livereload ? tinylr() : {}
     var closed = false
     var watcher
 
     if (opt.poll)
         opt.usePolling = true
 
-    server.listen(opt.port, 'localhost', function(a) {
+    if (livereload)
+        server.listen(opt.port, 'localhost', setup)
+    else {
+        process.nextTick(setup)
+    }
+
+    function setup() {
         if (closed)
             return
 
@@ -41,7 +48,7 @@ module.exports = function wtch(glob, opt) {
                 : reload.bind(null, 'change'))
 
         emitter.emit('connect', server)
-    })
+    }
 
     function reload(event, path) {
         emitter.emit('watch', event, path)
@@ -54,25 +61,30 @@ module.exports = function wtch(glob, opt) {
             return
         }
 
-        try {
-            server.changed({ body: { files: [ path ] } })
-            emitter.emit('reload', path)
-        } catch (e) {
-            throw e
+        if (livereload) {
+            try {
+                server.changed({ body: { files: [ path ] } })
+                emitter.emit('reload', path)
+            } catch (e) {
+                throw e
+            }
         }
     }
 
-    var serverImpl = server.server
-    serverImpl.removeAllListeners('error')
-    serverImpl.on('error', function(err) {
-        if (err.code === 'EADDRINUSE') {
-            process.stderr.write('ERROR: livereload not started, port '+opt.port+' is in use\n')
-            server.close()
-        }
-    })
+    if (livereload) { 
+        var serverImpl = server.server
+        serverImpl.removeAllListeners('error')
+        serverImpl.on('error', function(err) {
+            if (err.code === 'EADDRINUSE') {
+                process.stderr.write('ERROR: livereload not started, port '+opt.port+' is in use\n')
+                server.close()
+            }
+        })
+    }
 
     emitter.close = function() {
-        server.close()
+        if (livereload)
+            server.close()
         if (watcher)
             watcher.close()
         closed = true
