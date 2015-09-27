@@ -2,17 +2,19 @@ var xtend = require('xtend')
 var tinylr = require('tiny-lr')
 var watch = require('chokidar').watch
 var log = require('bole')('wtch')
-var Emitter = require('events/')
+var Emitter = require('events')
 var match = require('minimatch')
 
 var ignore = [
     'node_modules/**', 'bower_components/**',
-    '.git', '.hg', '.svn', '.DS_Store', 
+    '.git', '.hg', '.svn', '.DS_Store',
     '*.swp', 'thumbs.db', 'desktop.ini'
 ]
 
 module.exports = function wtch(glob, opt) {
     opt = xtend({
+        port: 35729,
+        host: 'localhost',
         event: 'change',
         ignored: ignore,
         ignoreInitial: true
@@ -20,7 +22,7 @@ module.exports = function wtch(glob, opt) {
 
     if (typeof opt.port !== 'number')
         opt.port = 35729
-    
+
     var ignoreReload = opt.ignoreReload
     var emitter = new Emitter()
     var server = tinylr()
@@ -30,14 +32,14 @@ module.exports = function wtch(glob, opt) {
     if (opt.poll)
         opt.usePolling = true
 
-    server.listen(opt.port, 'localhost', function(a) {
+    server.listen(opt.port, opt.host, function(a) {
         if (closed)
             return
 
         log.info('livereload running on '+opt.port)
         watcher = watch(glob, opt)
-        watcher.on(opt.event, opt.event === 'all' 
-                ? reload 
+        watcher.on(opt.event, opt.event === 'all'
+                ? reload
                 : reload.bind(null, 'change'))
 
         emitter.emit('connect', server)
