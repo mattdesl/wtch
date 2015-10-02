@@ -34,7 +34,7 @@ test('should allow ignoring live reload events', function(t) {
         t.ok(true, 'connected to server')
         setTimeout(function() {
             fs.writeFileSync(filepath, ''+new Date())
-        }, 10)
+        }, 300)
     })
 
     live.on('watch', function(event, file) {
@@ -59,31 +59,6 @@ test('should allow ignoring live reload events', function(t) {
     })
     live.on('connect', function() {
         t.ok(true, 'connected to server')
-        setTimeout(function() {
-            fs.writeFileSync(filepath, ''+new Date())
-        }, 10)
-    })
-
-    live.on('watch', function(event, file) {
-        t.equal(event, 'change', 'received change event')
-        t.equal(file, filepath, 'received change file')
-        live.close()
-    })
-
-    live.on('reload', function(file) {
-        t.fail('should not have received the live reload event')
-    })
-})
-
-
-test('allow livereload to be disabled altogether', function(t) {
-    t.plan(3)
-    var filepath = path.join(__dirname, 'tmp.txt')
-    var live = wtch(filepath, { 
-        livereload: false
-    })
-    live.on('connect', function() {
-        t.ok(true, 'connected to watch server')
         setTimeout(function() {
             fs.writeFileSync(filepath, ''+new Date())
         }, 10)

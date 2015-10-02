@@ -23,17 +23,16 @@ module.exports = function wtch(glob, opt) {
     if (typeof opt.port !== 'number')
         opt.port = 35729
 
-    var livereload = opt.livereload !== false
     var ignoreReload = opt.ignoreReload
     var emitter = new Emitter()
-    var server = livereload ? tinylr() : {}
+    var server = tinylr()
     var closed = false
     var watcher
 
     if (opt.poll)
         opt.usePolling = true
-
-    server.listen(opt.port, opt.host, function(a) {
+    
+    server.listen(opt.port, opt.host, function () {
         if (closed)
             return
 
@@ -44,7 +43,7 @@ module.exports = function wtch(glob, opt) {
                 : reload.bind(null, 'change'))
 
         emitter.emit('connect', server)
-    }
+    })
 
     function reload(event, path) {
         emitter.emit('watch', event, path)
@@ -57,30 +56,25 @@ module.exports = function wtch(glob, opt) {
             return
         }
 
-        if (livereload) {
-            try {
-                server.changed({ body: { files: [ path ] } })
-                emitter.emit('reload', path)
-            } catch (e) {
-                throw e
-            }
+        try {
+            server.changed({ body: { files: [ path ] } })
+            emitter.emit('reload', path)
+        } catch (e) {
+            throw e
         }
     }
 
-    if (livereload) { 
-        var serverImpl = server.server
-        serverImpl.removeAllListeners('error')
-        serverImpl.on('error', function(err) {
-            if (err.code === 'EADDRINUSE') {
-                process.stderr.write('ERROR: livereload not started, port '+opt.port+' is in use\n')
-                server.close()
-            }
-        })
-    }
+    var serverImpl = server.server
+    serverImpl.removeAllListeners('error')
+    serverImpl.on('error', function(err) {
+        if (err.code === 'EADDRINUSE') {
+            process.stderr.write('ERROR: livereload not started, port '+opt.port+' is in use\n')
+            server.close()
+        }
+    })
 
     emitter.close = function() {
-        if (livereload)
-            server.close()
+        server.close()
         if (watcher)
             watcher.close()
         closed = true
