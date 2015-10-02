@@ -7,12 +7,14 @@ var match = require('minimatch')
 
 var ignore = [
     'node_modules/**', 'bower_components/**',
-    '.git', '.hg', '.svn', '.DS_Store', 
+    '.git', '.hg', '.svn', '.DS_Store',
     '*.swp', 'thumbs.db', 'desktop.ini'
 ]
 
 module.exports = function wtch(glob, opt) {
     opt = xtend({
+        port: 35729,
+        host: 'localhost',
         event: 'change',
         ignored: ignore,
         ignoreInitial: true
@@ -31,20 +33,14 @@ module.exports = function wtch(glob, opt) {
     if (opt.poll)
         opt.usePolling = true
 
-    if (livereload)
-        server.listen(opt.port, 'localhost', setup)
-    else {
-        process.nextTick(setup)
-    }
-
-    function setup() {
+    server.listen(opt.port, opt.host, function(a) {
         if (closed)
             return
 
         log.info('livereload running on '+opt.port)
         watcher = watch(glob, opt)
-        watcher.on(opt.event, opt.event === 'all' 
-                ? reload 
+        watcher.on(opt.event, opt.event === 'all'
+                ? reload
                 : reload.bind(null, 'change'))
 
         emitter.emit('connect', server)
