@@ -55,7 +55,6 @@ Supported options:
 - `poll` whether to use polling, default false
 - `event` the type of event to watch, can be `"change"` (default, only file save) or `"all"` (remove/delete/etc)
 - `port` the port for livereload, defaults to 35729
-- `livereload` (boolean) default true; can be used to disable livereload altogether and use this only as a thin chokidar wrapper
 - `ignoreReload` allows ignoring LiveReload events for specific files; can be a file path, or an array of paths, or a function that returns `true` to ignore the reload, Example:
 
 ```js
